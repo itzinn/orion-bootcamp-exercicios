@@ -23,6 +23,25 @@ function contaVogais(palavra: string): number {
     return qtdVogais;
 }
 
-const palavraTeste = "amendobobo"
-const resultadoTeste: number = contaVogais(palavraTeste)
-console.log("A palavra '"+palavraTeste+"' possui "+resultadoTeste+" vogais.")
+// exemplo de uso item A
+const palavraTesteA = "amendobobo";
+const resultadoTesteA: number = contaVogais(palavraTesteA);
+console.log("A palavra '"+palavraTesteA+"' possui "+resultadoTesteA+" vogais.");
+
+//exemplo de uso item B
+document.addEventListener("DOMContentLoaded", function () {
+    const formulario = document.getElementById("formulario") as HTMLFormElement;
+    const respDiv = document.getElementById("resp") as HTMLFormElement;
+
+    formulario.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const palavraInserida = document.getElementById("palavra") as HTMLInputElement;
+    
+        const palavraTesteB = palavraInserida.value;
+        const resultadoTesteB: number = contaVogais(palavraTesteB);
+        const mensagemResultado: string = "A palavra '"+palavraTesteB+"' possui "+resultadoTesteB+" vogais."
+
+        console.log(mensagemResultado);
+        respDiv.textContent = mensagemResultado;
+    });
+});
