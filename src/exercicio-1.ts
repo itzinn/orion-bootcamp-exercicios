@@ -7,17 +7,10 @@ b) Dar um exemplo de uso com uma palavra recebida via input no formulário.
 
 function contaVogais(palavra: string): number {
 
-    const palavraMin = palavra.toLowerCase();
-    const vogais = "aeiou";
-
+    const vogais = palavra.toLowerCase().match(/[aeiouáéíóúãõâêîôûäëïöü]/g);
     let qtdVogais: number = 0;
-
-    //itera sobre cada letra da palavra e confere se é vogal, se for aumenta o contador
-    for (let i=0; i < palavra.length; i++){
-        const letra = palavraMin[i];
-        if(vogais.includes(letra)){
-            qtdVogais++;
-        }
+    if(vogais !== null){
+        qtdVogais = vogais.length;
     }
 
     return qtdVogais;
