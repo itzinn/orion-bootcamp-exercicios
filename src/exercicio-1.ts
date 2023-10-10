@@ -17,7 +17,7 @@ function contaVogais(palavra: string): number {
 }
 
 // exemplo de uso item A
-const palavraTesteA = "amendobobo";
+const palavraTesteA: string = "amendobobo";
 const resultadoTesteA: number = contaVogais(palavraTesteA);
 console.log("A palavra '"+palavraTesteA+"' possui "+resultadoTesteA+" vogais.");
 
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
         const palavraInserida = document.getElementById("palavra") as HTMLInputElement;
     
-        const palavraTesteB = palavraInserida.value;
+        const palavraTesteB: string = palavraInserida.value;
         const resultadoTesteB: number = contaVogais(palavraTesteB);
         const mensagemResultado: string = "A palavra '"+palavraTesteB+"' possui "+resultadoTesteB+" vogais."
 
