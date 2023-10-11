@@ -32,27 +32,37 @@ let listaPessoas: Pessoa[] = [
 
 //encontra o objeto Pessoa determinado pelo id passado à função
 function obterBioImperativo(id: number): string{
-    const pessoa = listaPessoas.find(pessoa => pessoa.id === id);
 
-    if(pessoa != null){
-        return pessoa.bio;
-    } else{
-        return "Pessoa não encontrada."
+    for(const pessoa of listaPessoas){
+        if(pessoa.id === id){
+            return pessoa.bio;
+        }
     }
+
+    return "Pessoa não encontrada."
+
 }
 
 function obterNomeImperativo(id: number): string{
-    const pessoa = listaPessoas.find(pessoa => pessoa.id === id);
 
-    if(pessoa != null){
-        return pessoa.name;
-    } else{
-        return "Pessoa não encontrada."
+    for(const pessoa of listaPessoas){
+        if(pessoa.id === id){
+            return pessoa.name;
+        }
     }
+
+    return "Pessoa não encontrada."
 }
 
 function removePessoaImperativo(id: number): string{
-    const indexRemover = listaPessoas.findIndex(pessoa => pessoa.id === id);
+    let indexRemover = -1;
+
+    for(let i=0; i<listaPessoas.length; i++){
+        if(listaPessoas[i].id === id){
+            indexRemover = i;
+            break;
+        }
+    }
 
     if(indexRemover !== -1){
         const pessoaRemovida = listaPessoas[indexRemover].name
@@ -64,7 +74,14 @@ function removePessoaImperativo(id: number): string{
 }
 
 function alteraRegistroImperativo(id: number, campo: Funcional.campoAlteravel, novoTexto: string) {
-    const indexAlterar = listaPessoas.findIndex(pessoa => pessoa.id === id);
+    let indexAlterar = -1;
+
+    for(let i=0; i<listaPessoas.length; i++){
+        if(listaPessoas[i].id === id){
+            indexAlterar = i;
+            break;
+        }
+    }
 
     if(novoTexto === null)
         return "Texto inválido."
