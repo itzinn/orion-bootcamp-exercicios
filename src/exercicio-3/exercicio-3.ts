@@ -77,6 +77,7 @@ function exibirRegistros(lista: Pessoa[]){
 
     if(listaExibicao){
         listaExibicao.innerHTML = "";
+        console.log("entrou")
         lista.forEach((item) => {
             const li = document.createElement("li");
 
@@ -108,6 +109,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("formEnviarID") as HTMLFormElement;
 
     const botao1 = document.getElementById("mostrarNome") as HTMLButtonElement;
+    const botao2 = document.getElementById("mostrarBio") as HTMLButtonElement;
+    const botao3 = document.getElementById("removerRegistro") as HTMLButtonElement;
 
     form.addEventListener('submit', function(event){
         event.preventDefault();
@@ -118,6 +121,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if(event.submitter == botao1){
             console.log(obterNome(id, listaPessoas));
+        } else if(event.submitter == botao2){
+            console.log(obterBio(id, listaPessoas));
+        } else if(event.submitter == botao3){
+            console.log(removePessoaImperativo(id));
         }
         
         //mantém a lista exibida atualizada
