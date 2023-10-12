@@ -90,11 +90,16 @@ function alteraRegistroImperativo(id: number, campo: Funcional.campoAlteravel, n
         return "Texto inválido."
 
     //altera o objeto do index encontrado
-    if(campo === "nome"){
-        listaPessoas[indexAlterar].name = novoTexto;
-    } else if (campo === "bio"){
-        listaPessoas[indexAlterar].bio = novoTexto;
+    if(indexAlterar !== -1){
+        if(campo === "nome"){
+            listaPessoas[indexAlterar].name = novoTexto;
+        } else if (campo === "bio"){
+            listaPessoas[indexAlterar].bio = novoTexto;
+        }
+    } else{
+        return "Pessoa não encontrada."
     }
+    
 
     return "Alteração feita com sucesso."
 }
@@ -103,7 +108,7 @@ function alteraRegistroImperativo(id: number, campo: Funcional.campoAlteravel, n
 //Demonstra o uso das funções Imperativas
 console.log(obterBioImperativo(2));
 console.log(obterNomeImperativo(3));
-console.log(removePessoaImperativo(1));
+console.log(removePessoaImperativo(4));
 console.log(alteraRegistroImperativo(1, "bio", "sou a Ada"));
 console.log(obterBioImperativo(1));
 
@@ -112,6 +117,6 @@ console.log("-------------------------------------")
 //Demonstra o uso das funções Funcionais
 console.log(Funcional.obterBio(2, listaPessoas));
 console.log(Funcional.obterNome(3, listaPessoas));
-console.log(Funcional.removePessoa(1, listaPessoas));
-console.log(Funcional.alteraRegistro(1, "bio", "sou a Ada", listaPessoas));
+listaPessoas = Funcional.removePessoa(3, listaPessoas)
+listaPessoas = Funcional.alteraRegistro(1, "bio", "sou a Ada", listaPessoas);
 console.log(Funcional.obterBio(1, listaPessoas));
