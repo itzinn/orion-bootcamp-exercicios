@@ -15,13 +15,44 @@
     <body>
         <ul id="lista-pessoas"></ul>
 
-        <form id="formEnviarID">
-            <label for="ID">Insira o ID:</label>
-            <input type="number" id="ID" name="campoID">
+        <br><hr><br>
 
+        <form id="formEnviarID">
+            
+            <label for="ID">ID:</label><br>
+            <input type="number" id="ID" name="ID">
+            
+            <br><br>
+            
             <button type="submit" id="mostrarNome">Obter Nome</button>
             <button type="submit" id="mostrarBio">Obter Biografia</button>
             <button type="submit" id="removerRegistro">Remover Registro</button>
+
+        </form>
+
+        <br><hr><br>
+
+        <form id="formAlteracao">
+            
+            <label for="ID">ID:</label><br>
+            <input type="number" id="ID" name="ID">
+
+            <br><br>
+        
+            <label for="escolhaEnum">Campo de Alteração:</label><br>
+            <select id="escolhaEnum" name="campo">
+                <option value="nome">Nome</option>
+                <option value="bio">Biografia</option>
+            </select>
+
+            <br><br>
+
+            <label for="novoconteudo">Novo conteúdo:</label><br>
+            <input type="text" id="novoconteudo" name="novoconteudo">
+
+            <br><br>
+            
+            <button type="submit" id="alterarRegistro">Alterar Registro</button>
         </form>
 
         

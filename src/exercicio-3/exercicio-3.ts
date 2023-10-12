@@ -4,8 +4,6 @@ interface Pessoa {
     bio: string;
 }
 
-type campoAlteravel = "nome" | "bio";
-
 //encontra o objeto Pessoa determinado pelo id passado à função
 function obterBio(id: number, listaPessoas: Pessoa[]): string{
     const pessoa = listaPessoas.find(pessoa => pessoa.id === id);
@@ -49,7 +47,7 @@ function removePessoaImperativo(id: number): string{
     }
 }
 
-function alteraRegistro(id: number, campo: campoAlteravel, novoTexto: string, listaPessoas: Pessoa[]) {
+function alteraRegistro(id: number, campo: string, novoTexto: string, listaPessoas: Pessoa[]) {
     const indexAlterar = listaPessoas.findIndex(pessoa => pessoa.id === id);
 
     if(novoTexto === null)
@@ -59,6 +57,32 @@ function alteraRegistro(id: number, campo: campoAlteravel, novoTexto: string, li
         listaPessoas[indexAlterar].name = novoTexto;
     } else if (campo === "bio"){
         listaPessoas[indexAlterar].bio = novoTexto;
+    }
+
+    return "Alteração feita com sucesso."
+}
+
+function alteraRegistroImperativo(id: number, campo: string, novoTexto: string) {
+    let indexAlterar = -1;
+
+    //encontra o index do objeto especificado pelo ID
+    for(let i=0; i<listaPessoas.length; i++){
+        if(listaPessoas[i].id === id){
+            indexAlterar = i;
+            break;
+        }
+    }
+
+    if(novoTexto === null)
+        return "Texto inválido."
+
+    //altera o objeto do index encontrado
+    if(campo === "nome"){
+        listaPessoas[indexAlterar].name = novoTexto;
+    } else if (campo === "bio"){
+        listaPessoas[indexAlterar].bio = novoTexto;
+    } else{
+        return "Campo inválido."
     }
 
     return "Alteração feita com sucesso."
@@ -77,7 +101,6 @@ function exibirRegistros(lista: Pessoa[]){
 
     if(listaExibicao){
         listaExibicao.innerHTML = "";
-        console.log("entrou")
         lista.forEach((item) => {
             const li = document.createElement("li");
 
@@ -107,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
     exibirRegistros(listaPessoas);
 
     const form = document.getElementById("formEnviarID") as HTMLFormElement;
+    const form2 = document.getElementById("formAlteracao") as HTMLFormElement;
 
     const botao1 = document.getElementById("mostrarNome") as HTMLButtonElement;
     const botao2 = document.getElementById("mostrarBio") as HTMLButtonElement;
@@ -116,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
 
         const formData = new FormData(form);
-        const inputID = formData.get("campoID") as string;
+        const inputID = formData.get("ID") as string;
         const id = parseInt(inputID);
 
         if(event.submitter == botao1){
@@ -126,6 +150,21 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if(event.submitter == botao3){
             console.log(removePessoaImperativo(id));
         }
+        
+        //mantém a lista exibida atualizada
+        exibirRegistros(listaPessoas);
+    });
+
+    form2.addEventListener('submit', function(event){
+        event.preventDefault();
+
+        const formData = new FormData(form2);
+        const inputID = formData.get("ID") as string;
+        const id = parseInt(inputID);
+
+        const campo = formData.get("campo") as string;
+        const novoConteudo = formData.get("novoconteudo") as string;
+        console.log(alteraRegistroImperativo(id, campo, novoConteudo));
         
         //mantém a lista exibida atualizada
         exibirRegistros(listaPessoas);
