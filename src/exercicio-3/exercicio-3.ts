@@ -105,6 +105,9 @@ function exibirRegistros(lista: Pessoa[]){
             const li = document.createElement("li");
 
             //formata os objetos Pessoa da lista para serem exibidos na página HTML
+            const idElement = document.createElement("strong")
+            idElement.textContent = item.id.toString();
+
             const nomeElement = document.createElement("strong")
             nomeElement.textContent = item.name;
 
@@ -113,6 +116,8 @@ function exibirRegistros(lista: Pessoa[]){
 
             const divElement = document.createElement("div")
 
+            divElement.appendChild(idElement);
+            divElement.appendChild(document.createElement("br"))
             divElement.appendChild(nomeElement);
             divElement.appendChild(document.createElement("br"))
             divElement.appendChild(bioElement);
