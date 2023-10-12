@@ -43,7 +43,7 @@ function removePessoaImperativo(id: number): string{
     }
 }
 
-function alteraRegistroImperativo(id: number, campo: string, novoTexto: string): string {
+function alteraRegistroImperativo(id: number, campo: string, novoTexto: string) {
     let indexAlterar = -1;
 
     //encontra o index do objeto especificado pelo ID
@@ -58,13 +58,16 @@ function alteraRegistroImperativo(id: number, campo: string, novoTexto: string):
         return "Texto inválido."
 
     //altera o objeto do index encontrado
-    if(campo === "nome"){
-        listaPessoas[indexAlterar].name = novoTexto;
-    } else if (campo === "bio"){
-        listaPessoas[indexAlterar].bio = novoTexto;
+    if(indexAlterar !== -1){
+        if(campo === "nome"){
+            listaPessoas[indexAlterar].name = novoTexto;
+        } else if (campo === "bio"){
+            listaPessoas[indexAlterar].bio = novoTexto;
+        }
     } else{
-        return "Campo inválido."
+        return "Pessoa não encontrada."
     }
+    
 
     return "Alteração feita com sucesso."
 }
