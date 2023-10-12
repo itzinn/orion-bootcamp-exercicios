@@ -68,7 +68,7 @@ function removePessoaImperativo(id: number): string{
     //remove o objeto do index encontrado
     if(indexRemover !== -1){
         const pessoaRemovida = listaPessoas[indexRemover].name
-        listaPessoas.slice(indexRemover, 1);
+        listaPessoas.splice(indexRemover, 1);
         return pessoaRemovida+" foi removido(a)."
     } else{
         return "Pessoa não encontrada."
