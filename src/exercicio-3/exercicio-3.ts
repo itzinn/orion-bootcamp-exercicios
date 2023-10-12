@@ -4,6 +4,13 @@ interface Pessoa {
     bio: string;
 }
 
+let listaPessoas: Pessoa[] = [
+    {"id" : 1, "name": "Ada Lovelace", "bio" : "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina"},
+    {"id" : 2, "name": "Alan Turing", "bio" : "Alan Turing foi um matemático, cientista da computação, lógico, criptoanalista, filósofo e biólogo teórico britânico, ele é amplamente considerado o pai da ciência da computação teórica e da inteligência artificial"},
+    {"id" : 3, "name": "Nikola Tesla", "bio" : "Nikola Tesla foi um inventor, engenheiro eletrotécnico e engenheiro mecânico sérvio, mais conhecido por suas contribuições ao projeto do moderno sistema de fornecimento de eletricidade em corrente alternada."},
+    {"id" : 4, "name": "Nicolau Copérnico", "bio": "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar."}
+];
+
 //encontra o objeto Pessoa determinado pelo id passado à função
 function obterBio(id: number, listaPessoas: Pessoa[]): string{
     const pessoa = listaPessoas.find(pessoa => pessoa.id === id);
@@ -13,17 +20,6 @@ function obterBio(id: number, listaPessoas: Pessoa[]): string{
 function obterNome(id: number, listaPessoas: Pessoa[]): string{
     const pessoa = listaPessoas.find(pessoa => pessoa.id === id);
     return pessoa ? pessoa.name : "Pessoa não encontrada."
-}
-
-function removePessoa(id: number, listaPessoas: Pessoa[]): string{
-    const pessoaRemover = listaPessoas.find(pessoa => pessoa.id === id);
-
-    if(pessoaRemover){
-        listaPessoas = listaPessoas.filter(pessoa => pessoa.id !== id);
-        return pessoaRemover.name+" foi removido(a)."
-    } else{
-        return "Pessoa não encontrada."
-    }
 }
 
 function removePessoaImperativo(id: number): string{
@@ -47,22 +43,7 @@ function removePessoaImperativo(id: number): string{
     }
 }
 
-function alteraRegistro(id: number, campo: string, novoTexto: string, listaPessoas: Pessoa[]) {
-    const indexAlterar = listaPessoas.findIndex(pessoa => pessoa.id === id);
-
-    if(novoTexto === null)
-        return "Texto inválido."
-
-    if(campo === "nome"){
-        listaPessoas[indexAlterar].name = novoTexto;
-    } else if (campo === "bio"){
-        listaPessoas[indexAlterar].bio = novoTexto;
-    }
-
-    return "Alteração feita com sucesso."
-}
-
-function alteraRegistroImperativo(id: number, campo: string, novoTexto: string) {
+function alteraRegistroImperativo(id: number, campo: string, novoTexto: string): string {
     let indexAlterar = -1;
 
     //encontra o index do objeto especificado pelo ID
@@ -88,16 +69,9 @@ function alteraRegistroImperativo(id: number, campo: string, novoTexto: string) 
     return "Alteração feita com sucesso."
 }
 
-let listaPessoas: Pessoa[] = [
-    {"id" : 1, "name": "Ada Lovelace", "bio" : "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina"},
-    {"id" : 2, "name": "Alan Turing", "bio" : "Alan Turing foi um matemático, cientista da computação, lógico, criptoanalista, filósofo e biólogo teórico britânico, ele é amplamente considerado o pai da ciência da computação teórica e da inteligência artificial"},
-    {"id" : 3, "name": "Nikola Tesla", "bio" : "Nikola Tesla foi um inventor, engenheiro eletrotécnico e engenheiro mecânico sérvio, mais conhecido por suas contribuições ao projeto do moderno sistema de fornecimento de eletricidade em corrente alternada."},
-    {"id" : 4, "name": "Nicolau Copérnico", "bio": "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar."}
-];
-
 //manipula o elemento da lista ordenada na página HTML, adicionando os objetos Pessoas
 function exibirRegistros(lista: Pessoa[]){
-    const listaExibicao = document.getElementById("lista-pessoas");
+    const listaExibicao = document.getElementById("lista-pessoas") as HTMLUListElement;
 
     if(listaExibicao){
         listaExibicao.innerHTML = "";
@@ -134,24 +108,29 @@ function exibirRegistros(lista: Pessoa[]){
 document.addEventListener("DOMContentLoaded", function () {
     exibirRegistros(listaPessoas);
 
-    const form = document.getElementById("formEnviarID") as HTMLFormElement;
-    const form2 = document.getElementById("formAlteracao") as HTMLFormElement;
+    //obtem os elementos formulários
+    const formConsulta = document.getElementById("formEnviarID") as HTMLFormElement;
+    const formAlteracao = document.getElementById("formAlteracao") as HTMLFormElement;
 
+    //obtem os elementos botoes
     const botao1 = document.getElementById("mostrarNome") as HTMLButtonElement;
     const botao2 = document.getElementById("mostrarBio") as HTMLButtonElement;
     const botao3 = document.getElementById("removerRegistro") as HTMLButtonElement;
 
+    //obtem os elementos div de resposta
     const respDivForm1 =  document.getElementById("respForm1") as HTMLDivElement;
     const respDivForm2 =  document.getElementById("respForm2") as HTMLDivElement;
 
     let resp: string;
 
-    form.addEventListener('submit', function(event){
+    //formulário que realiza consulta de nome, bio e remoção
+    formConsulta.addEventListener('submit', function(event){
         event.preventDefault();
 
-        const formData = new FormData(form);
-        const inputID = formData.get("ID") as string;
-        const id = parseInt(inputID);
+        //obtem o ID inserido no forms
+        const formData = new FormData(formConsulta);
+        const inputID: string = formData.get("ID") as string;
+        const id: number = parseInt(inputID);
 
         if(event.submitter == botao1){
             resp = obterNome(id, listaPessoas);
@@ -171,15 +150,18 @@ document.addEventListener("DOMContentLoaded", function () {
         exibirRegistros(listaPessoas);
     });
 
-    form2.addEventListener('submit', function(event){
+    //formulário que realiza alteração em um item na lista
+    formAlteracao.addEventListener('submit', function(event){
         event.preventDefault();
 
-        const formData = new FormData(form2);
-        const inputID = formData.get("ID") as string;
-        const id = parseInt(inputID);
+        //obtem o ID inserido no forms
+        const formData = new FormData(formAlteracao);
+        const inputID: string = formData.get("ID") as string;
+        const id: number = parseInt(inputID);
 
-        const campo = formData.get("campo") as string;
-        const novoConteudo = formData.get("novoconteudo") as string;
+        //obtem o campo a ser modificado e o novo conteudo
+        const campo: string = formData.get("campo") as string;
+        const novoConteudo: string = formData.get("novoconteudo") as string;
 
         resp = alteraRegistroImperativo(id, campo, novoConteudo);
         console.log(resp);
