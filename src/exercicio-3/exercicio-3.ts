@@ -141,6 +141,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const botao2 = document.getElementById("mostrarBio") as HTMLButtonElement;
     const botao3 = document.getElementById("removerRegistro") as HTMLButtonElement;
 
+    const respDivForm1 =  document.getElementById("respForm1") as HTMLDivElement;
+    const respDivForm2 =  document.getElementById("respForm2") as HTMLDivElement;
+
+    let resp: string;
+
     form.addEventListener('submit', function(event){
         event.preventDefault();
 
@@ -149,11 +154,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const id = parseInt(inputID);
 
         if(event.submitter == botao1){
-            console.log(obterNome(id, listaPessoas));
+            resp = obterNome(id, listaPessoas);
+            console.log(resp);
+            respDivForm1.textContent = resp;
         } else if(event.submitter == botao2){
+            resp = obterBio(id, listaPessoas);
             console.log(obterBio(id, listaPessoas));
+            respDivForm1.textContent = resp;
         } else if(event.submitter == botao3){
-            console.log(removePessoaImperativo(id));
+            resp = removePessoaImperativo(id);
+            console.log(resp);
+            respDivForm1.textContent = resp;
         }
         
         //mantém a lista exibida atualizada
@@ -169,8 +180,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const campo = formData.get("campo") as string;
         const novoConteudo = formData.get("novoconteudo") as string;
-        console.log(alteraRegistroImperativo(id, campo, novoConteudo));
-        
+
+        resp = alteraRegistroImperativo(id, campo, novoConteudo);
+        console.log(resp);
+        respDivForm2.textContent = resp;
+
         //mantém a lista exibida atualizada
         exibirRegistros(listaPessoas);
     });
