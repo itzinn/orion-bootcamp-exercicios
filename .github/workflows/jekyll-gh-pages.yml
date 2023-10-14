@@ -1,49 +1,49 @@
-name: Deploy GitHub Pages
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
-
-      - name: Install Dependencies
+        with:
+          target_directory: dist
+          
+      - name: Install dependencies
         run: npm install
 
-      - name: Build
+      - name: Build TypeScript
         run: npx tsc
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: dist  # Nome do artefat
-          path: dist  # Diretório de onde o artefato deve ser carregado
+          name: dist
+          path: dist
 
   deploy:
-    needs: build
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         with:
-          name: dist  # Nome do artefato a ser baixado
+          name: dist
+          path: dist
 
-      - name: Deploy to GitHub Pages
-        uses: actions/checkout@v2  # Este passo é usado para restaurar o código original
+      - name: Deploy to Pages
+        uses: actions/deploy-pages@v3
         with:
-          ref: main  # Branch a ser usado para o deploy
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
-        with:
-          target_branch: gh-pages  # Branch de destino para o deploy
-          artifact_folder: dist   # Diretório do artefato a ser implantado
+          target_branch: gh-pages
+          publish_dir: ./dist
+          keep_files: true
