@@ -1,0 +1,49 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist  # Nome do artefat
+          path: dist  # Diretório de onde o artefato deve ser carregado
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist  # Nome do artefato a ser baixado
+
+      - name: Deploy to GitHub Pages
+        uses: actions/checkout@v2  # Este passo é usado para restaurar o código original
+        with:
+          ref: main  # Branch a ser usado para o deploy
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
+        with:
+          target_branch: gh-pages  # Branch de destino para o deploy
+          artifact_folder: dist   # Diretório do artefato a ser implantado
