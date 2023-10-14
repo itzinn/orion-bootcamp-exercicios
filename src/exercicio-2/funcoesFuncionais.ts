@@ -1,5 +1,5 @@
 
-interface Pessoa {
+export interface Pessoa {
     id: number;
     name: string;
     bio: string;
@@ -18,28 +18,34 @@ export function obterNome(id: number, listaPessoas: Pessoa[]): string{
     return pessoa ? pessoa.name : "Pessoa não encontrada."
 }
 
-export function removePessoa(id: number, listaPessoas: Pessoa[]): string{
+export function removePessoa(id: number, listaPessoas: Pessoa[]): Pessoa[] {
     const pessoaRemover = listaPessoas.find(pessoa => pessoa.id === id);
 
     if(pessoaRemover){
         listaPessoas = listaPessoas.filter(pessoa => pessoa.id !== id);
-        return pessoaRemover.name+" foi removido(a)."
+        console.log(pessoaRemover.name+" foi removido(a).")
     } else{
-        return "Pessoa não encontrada."
+        console.log("Pessoa não encontrada.");
     }
+
+    return listaPessoas;
 }
 
-export function alteraRegistro(id: number, campo: campoAlteravel, novoTexto: string, listaPessoas: Pessoa[]) {
+export function alteraRegistro(id: number, campo: campoAlteravel, novoTexto: string, listaPessoas: Pessoa[]): Pessoa[] {
     const indexAlterar = listaPessoas.findIndex(pessoa => pessoa.id === id);
 
     if(novoTexto === null)
-        return "Texto inválido."
+        console.log("Texto inválido.")
 
-    if(campo === "nome"){
-        listaPessoas[indexAlterar].name = novoTexto;
-    } else if (campo === "bio"){
-        listaPessoas[indexAlterar].bio = novoTexto;
+    if(indexAlterar !== -1){
+        if(campo === "nome"){
+            listaPessoas[indexAlterar].name = novoTexto;
+        } else if (campo === "bio"){
+            listaPessoas[indexAlterar].bio = novoTexto;
+        }
+
+        console.log("Alteração feita com sucesso.")
     }
-
-    return "Alteração feita com sucesso."
+    
+    return listaPessoas;
 }
