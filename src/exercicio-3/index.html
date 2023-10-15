@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+
+        <style>
+            ul { 
+                list-style: none;
+                margin: 0;
+                padding-left: 0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <ul id="lista-pessoas"></ul>
+
+        <br><hr>
+
+        <form id="formEnviarID">
+            
+            <label for="ID">ID:</label><br>
+            <input type="number" id="ID" name="ID">
+            
+            <br><br>
+            
+            <button type="submit" id="mostrarNome">Obter Nome</button>
+            <button type="submit" id="mostrarBio">Obter Biografia</button>
+            <button type="submit" id="removerRegistro">Remover Registro</button>
+
+            <br><br>
+
+            <div id="respForm1"></div>
+
+        </form>
+
+        <br><hr>
+
+        <form id="formAlteracao">
+            
+            <label for="ID">ID:</label><br>
+            <input type="number" id="ID" name="ID">
+
+            <br><br>
+        
+            <label for="escolhaEnum">Campo de Alteração:</label><br>
+            <select id="escolhaEnum" name="campo">
+                <option value="nome">Nome</option>
+                <option value="bio">Biografia</option>
+            </select>
+
+            <br><br>
+
+            <label for="novoconteudo">Novo conteúdo:</label><br>
+            <input type="text" id="novoconteudo" name="novoconteudo">
+
+            <br><br>
+            
+            <button type="submit" id="alterarRegistro">Alterar Registro</button>
+
+            <br><br>
+
+            <div id="respForm2"></div>
+        </form>
+
+        
+
+        <script src="../../dist/exercicio-3/exercicio-3.js"></script>
+    </body>
+</html>
